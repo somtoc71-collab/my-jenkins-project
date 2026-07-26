@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_USER      = 'bamzy14'
+        IMAGE_NAME       = 'my-node-app'
+        IMAGE_TAG        = "${BUILD_NUMBER}"
+        DOCKER_HUB_CRED  = 'docker-hub-credential' 
+        CONTAINER_NAME   = 'my-running-node-app'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Pulling code from Git repository...'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building Docker image...'
+                sh "docker build -t ${DOCKER_USER}:${IMAGE_TAG} -t ${DOCKER_USER}:latest ."
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'testing the application...'
+                sh "docker run --rm ${DOCKER_USER}:${IMAGE_TAG} npm test"
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                script {
+                    sh "docker stop ${CONTAINER_NAME} || true"
+                    sh "docker rm ${CONTAINER_NAME} || true"
+                    sh "docker run -d --name ${CONTAINER_NAME} -p 3000:3000 ${DOCKER_USER}:${IMAGE_TAG}"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check build logs for details.'
+        }
+        always {
+            echo 'Cleaning up dangling images...'
+            sh 'docker user prune -f || true'
+        }
+    }
+}
