@@ -3,45 +3,53 @@ pipeline {
 
     environment {
         DOCKER_USER      = 'bamzy14'
-        IMAGE_NAME       = 'my-node-app'
+        IMAGE_NAME       = 'my-repo'
         IMAGE_TAG        = "${BUILD_NUMBER}"
         DOCKER_HUB_CRED  = 'docker-hub-credential' 
         CONTAINER_NAME   = 'my-running-node-app'
     }
-    
+ def gv
     stages {
+        stage('initialize') {
+            steps {
+                script {
+                    gv = load 'script.groovy'
+                }
+            }
+        }
         stage('Checkout') {
             steps {
-                echo 'Pulling code from Git repository...'
+                script {
+                   gv.checkout()
+                }
+            
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building Docker image...'
-                sh "docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} -t ${DOCKER_USER}/${IMAGE_NAME}:latest ."
+                script {
+                    gv.build()
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo 'testing the application...'
-                sh "docker run --rm ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} npm test"
+                script {
+                    gv.test()
+                }
             }
         }
 
-        stage('Deploy') {
+        stage('push & deploy') {
             steps {
-                echo 'Deploying application...'
                 script {
-                    sh "docker stop ${CONTAINER_NAME} || true"
-                    sh "docker rm ${CONTAINER_NAME} || true"
-                    sh "docker run -d --name ${CONTAINER_NAME} -p 3000:3000 ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
+                    gv.pushAndDeploy()
                 }
             }
         }
     }
-
     post {
         success {
             echo 'Pipeline completed successfully!'
