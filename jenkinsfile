@@ -26,7 +26,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'testing the application...'
-                sh "docker run --rm ${DOCKER_USER}:${IMAGE_TAG} npm test"
+                sh "docker run --rm ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} npm test"
             }
         }
 
