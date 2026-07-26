@@ -4,19 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"start": "node index.js"  
-    "test": "echo \"running dummy test... success!\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/somtoc71-collab/my-jenkins-project.git"
+    "start": "node index.js",
+    "test": "echo \"Running test... Success!"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/somtoc71-collab/my-jenkins-project/issues"
-  },
-  "homepage": "https://github.com/somtoc71-collab/my-jenkins-project#readme"
+  "license": "ISC"
 }
