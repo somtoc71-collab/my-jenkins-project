@@ -1,4 +1,4 @@
-Here is a clean, comprehensive **README.md** project summary designed specifically for your GitHub repository to show recruiters you know how to build, debug, and scale enterprise CI/CD workflows.
+
 # 🚀 Automated Node.js CI/CD Pipeline (Jenkins, Shared Groovy Scripts & Docker)
 ## 📌 Executive Summary
 This project demonstrates an end-to-end, production-ready Continuous Integration and Continuous Deployment (CI/CD) pipeline for a Node.js application. Built using **Jenkins**, **Docker**, and **Groovy**, the architecture focuses on **modular pipeline design**, **secure credential management**, and **automated container lifecycle management**.
@@ -28,7 +28,6 @@ Instead of writing monolithic, messy pipeline scripts, this project separates or
    * Uploads both image tags to the remote repository.
    * Gracefully stops existing containers, cleans up resources, and deploys the new release on port 3000.
 ## 🔧 Engineering Challenges & Solutions
-Recruiters and hiring managers value real-world problem-solving. Here is how key pipeline issues were diagnosed and resolved during development:
 ### 1. Declarative Pipeline Variable Scoping
  * **Issue:** Declaring def gv outside the pipeline {} block resulted in Jenkins syntax parse failures (Not a valid section definition).
  * **Solution:** Moved initialization inside the first script {} block using implicit global binding (gv = load 'script.groovy'), making helper functions accessible across all stages without breaking Declarative pipeline rules.
@@ -38,7 +37,10 @@ Recruiters and hiring managers value real-world problem-solving. Here is how key
 ### 3. Container Lifecycle Hygiene
  * **Issue:** Re-deploying application updates caused port binding conflicts and orphaned container errors.
  * **Solution:** Implemented non-blocking pre-deployment cleanup steps (docker stop & docker rm || true) to guarantee zero-downtime container replacement.
- 
+ <img width="1327" height="672" alt="image" src="https://github.com/user-attachments/assets/865e2a34-564c-4a78-b5bb-150a8f7bd059" />
+<img width="1338" height="684" alt="image" src="https://github.com/user-attachments/assets/04dd32df-2682-4301-8387-a8c0c3907ca0" />
+
+
 
  * **Jenkins Pipeline Execution: Pipeline runs cleanly through all 5 automated stages in under 3 minutes.
  * **Docker Hub Repository:** Images published successfully under bamzy14/my-repo tagged with both dynamic build numbers and latest.
