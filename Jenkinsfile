@@ -8,11 +8,19 @@ pipeline {
         DOCKER_HUB_CRED  = 'docker-hub-credential' 
         CONTAINER_NAME   = 'my-running-node-app'
     }
+ def gv
     stages {
         stage('initialize') {
             steps {
                 script {
                     gv = load 'script.groovy'
+                }
+            }
+        }    
+        stage('increment version') {
+            steps {
+                script {
+                    gv.incremrentVersion()
                 }
             }
         }
