@@ -1,3 +1,5 @@
+def gv
+
 pipeline {
     agent any
 
@@ -8,7 +10,6 @@ pipeline {
         DOCKER_HUB_CRED  = 'docker-hub-credential' 
         CONTAINER_NAME   = 'my-running-node-app'
     }
- def gv
     stages {
         stage('initialize') {
             steps {
