@@ -5,7 +5,6 @@ def incrementVersion() {
 def checkout() {
                 echo 'Pulling code from Git repository...'
             }
-        }
 def build() {
     sh 'npm version patch --git-tag-version'
     def version = sh (script: 'node -p \"require(\'./package.json\').version\"', returnStatus: true).trim()
