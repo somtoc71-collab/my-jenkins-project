@@ -18,7 +18,6 @@ def test() {
     echo 'Testing the application...'
     sh "docker run --rm ${env.DOCKER_USER}/${env.IMAGE_NAME}:${env.IMAGE_TAG} npm test"
 }
-def pushAndDeploy() {
    def pushAndDeploy() {
     echo 'deploying the application...'
     withCredentials([usernamePassword(credentialsId: "${env.DOCKER_HUB_CRED}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
