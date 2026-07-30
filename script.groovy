@@ -26,5 +26,6 @@ def pushAndDeploy() {
         sh "docker push ${env.DOCKER_USER}/${env.IMAGE_NAME}:${env.IMAGE_TAG}"
         sh "docker push ${env.DOCKER_USER}/${env.IMAGE_NAME}:latest"
     }
-}
+} //
+
 return this
