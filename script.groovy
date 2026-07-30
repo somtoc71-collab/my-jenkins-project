@@ -6,7 +6,7 @@ def checkout() {
                 echo 'Pulling code from Git repository...'
             }
 def build() {
-    def version = sh (script: 'node -p \"require(\'./package.json\').version\"', returnStatus: true).trim()
+    def version = sh (script: "node -p \"require('./package.json').version\"", returnStdout:true).trim()
     env.IMAGE_TAG = version
     echo "New version: ${env.IMAGE_TAG}"
       echo 'Building Docker image...'
@@ -20,7 +20,7 @@ def test() {
    def pushAndDeploy() {
     echo 'deploying the application...'
     withCredentials([usernamePassword(credentialsId: "${env.DOCKER_HUB_CRED}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        sh "echo \$PASSWORD | docker login -u \$USERNAME --password-stdin"
+        sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
         sh "docker push ${env.DOCKER_USER}/${env.IMAGE_NAME}:${env.IMAGE_TAG}"
         sh "docker push ${env.DOCKER_USER}/${env.IMAGE_NAME}:latest"
     }
