@@ -6,7 +6,7 @@ def checkout() {
                 echo 'Pulling code from Git repository...'
             }
 def build() {
-    sh 'npm version patch --no-git-tag-version'
+    sh 'npm version patch --no-git-tag-version --no-commit-hooks'
     def version = sh (script: 'node -p \"require(\'./package.json\').version\"', returnStatus: true).trim()
     env.IMAGE_TAG = version
     echo "New version: ${env.IMAGE_TAG}"
