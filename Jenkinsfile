@@ -54,6 +54,9 @@ pipeline {
             steps {
                 script {
                     gv.pushAndDeploy()
+                    def dockercmd= 'docker run -d -p 3080:3080 bamzy14/my-repo:latest'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o strictHostKeyChecking=no ec2-user@98.84.104.149 ${dockercmd}"
                     }
                 }
             }
